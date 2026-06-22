@@ -3,7 +3,7 @@ from menu import *
 
 def menu():
     while True:
-        titulo("LOCAÇÃO DE RESTAURANTES")
+        texting("        LOCAÇÃO DE RESTAURANTES", "ANUNCIE SEUS SERVIÇOS NA NOSSA PLATAFORMA")
         print("\n1. Cadastrar Restaurante\n2. Listar Restaurante\n3. Status do Restaurante\n4. Ajustar Restaurante\n5. Sair\n")
         menu_escolha_cliente = input ("Escolha uma opção: ")
         match menu_escolha_cliente:
@@ -18,6 +18,9 @@ def menu():
 
             case "4" | "quatro":
                 configurar_restaurante()
+
+            case "test" | "teste" | "t":
+                anuncio()
 
             case "5" | "cinco":
                 os.system("clear")

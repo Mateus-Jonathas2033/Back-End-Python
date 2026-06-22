@@ -7,30 +7,33 @@ lista_restaurante = []
 
 
 
+#text
+def texting(title, subtitle):
 
-#title:
-def titulo(texto):
+    #title:
     os.system("clear")
     espaco = " " * 100
-    print(f"{espaco}{texto}")
-
-
-
-
-#sub-title:
-def subtitulo(texto):
+    print(f"{espaco}{title}")
+    
+    #sub-title:
+    if subtitle == "":
+        return
     espaco = " " * 99
-    print(f"{espaco}{texto}")
+    print(f"{espaco}{subtitle}")
     print("\n")
+
 
 
 
 #register:
 def cadastrar_restaurante():
-    def titulo_subtitulo():
-        titulo("Cadastro de Restaurantes")
-    titulo_subtitulo()
+    texting("Cadastro de Restaurantes", "")
     nome_do_restaurante = input("\nDigite o nome do restaurante: ").upper()
+    for restaurante in lista_restaurante:
+        nome_restaurante = restaurante["Nome"]
+        if nome_restaurante == nome_do_restaurante:
+            input(f"\nO nome '{nome_do_restaurante}' já foi cadastrado. Por favor verifique a lista de restaurantes.")
+            return
     categoria_do_restaurante = input("Digite a categoria do restaurante: ").upper()
     descricao_do_restaurante =  input("Digite uma descrição para o seu restaurante: ").upper()
     cadastro_restaurante = {"Nome":nome_do_restaurante, "Categoria":categoria_do_restaurante, "Descricao":descricao_do_restaurante, "Status":"AGUARDANDO APROVAÇÃO", "Ativo":False}
@@ -48,9 +51,7 @@ def cadastrar_restaurante():
 
 #listing:
 def listagem_restaurante():
-    def titulo_subtitulo():
-        titulo("Lista de Restaurantes")
-    titulo_subtitulo()
+    texting("Lista de Restaurantes", "")
     print(f"\n\n{"Nome:".ljust(44)}{"Categoria:".ljust(40)}{"Status:".ljust(40)}{"Descrição:".ljust(0)}\n")
     for restaurante in lista_restaurante:
         nome_restaurante = restaurante["Nome"]
@@ -67,10 +68,7 @@ def listagem_restaurante():
 #modify status: [activate/disable]
 def status_restaurante():
     chave = False
-    def titulo_subtitulo():
-        titulo("Alternar status do Restaurante")
-        subtitulo("       [Ativar/Desativar]")
-    titulo_subtitulo()
+    texting("Alternar status do Restaurante","       [Ativar/Desativar]")
     print(f"{"Nome:".ljust(44)}{"Status:".ljust(40)}\n")
     for restaurante in lista_restaurante:
         nome_restaurante = restaurante["Nome"]
@@ -100,15 +98,14 @@ def status_restaurante():
 
 #modify or remove:
 def configurar_restaurante():
-    def titulo_subtitulo():
-        titulo("Ajustar configurações do Restaurante")
-        subtitulo("       [Modificação e Exclusão]")
-    titulo_subtitulo()
-    entrada = input("O que deseja fazer? (Alterar/Remover): ")
+    def reply_text():
+        texting("Ajustar configurações do Restaurante","       [Modificação e Exclusão]")
+    reply_text()
+    entrada = input("O que deseja fazer? (Alterar/Remover): ").upper()
 
     match entrada:
-        case "remover" | "Remover" | "REMOVER":
-            titulo_subtitulo()
+        case "REMOVER":
+            reply_text()
             print(f"{"Nome:".ljust(44)}\n")
             for restaurante in lista_restaurante:
                 nome_restaurante = restaurante["Nome"]
@@ -123,21 +120,21 @@ def configurar_restaurante():
                     input("\nNome inválido, saindo...!\n")
                     return
 
-        case "Alterar" | "alterar" | "ALTERAR":
+        case "ALTERAR":
             chave = False
-            titulo_subtitulo()
+            reply_text()
             opcao = input("O que deseja alterar? (Nome/Descrição/Categoria): ").upper()
 
             match opcao:
                 case "NOME":
-                    titulo_subtitulo()
+                    reply_text()
                     print("Nome:")
                     for restaurante in lista_restaurante:
                         nome_restaurante = restaurante["Nome"]
-                        print(f"{nome_restaurante}") 
-                    old= input("\nQual restaurante você deseja alterar? ").upper()
+                        print(f"-{nome_restaurante}") 
+                    verifying_name = input("\nQual restaurante você deseja alterar? ").upper()
                     for restaurante in lista_restaurante:
-                        if old == restaurante["Nome"]:
+                        if verifying_name == restaurante["Nome"]:
                             chave = True
                             novo_nome = input("Digite o novo nome do restaurante: ").upper()
                             restaurante["Nome"] = novo_nome
@@ -148,7 +145,7 @@ def configurar_restaurante():
                         listagem_restaurante()
 
                 case "DESCRIÇÃO" | "DESCRICAO":
-                    titulo_subtitulo()
+                    reply_text()
                     print(f"{"Nome:".ljust(44)}Descrição:")
                     for restaurante in lista_restaurante:
                         nome_restaurante = restaurante["Nome"]
@@ -167,7 +164,7 @@ def configurar_restaurante():
                             listagem_restaurante()
 
                 case "CATEGORIA":
-                    titulo_subtitulo()
+                    reply_text()
                     print(f"{"Nome:".ljust(44)}Categoria:")
                     for restaurante in lista_restaurante:
                         nome_restaurante = restaurante["Nome"]
@@ -192,4 +189,28 @@ def configurar_restaurante():
         case _:
             input("\nSaindo...!")
             return
+
+
+
+#Selling
+def anuncio():
+    texting("Anuncie seus pratos", "")
+    verifying_name = input("Digite o nome do seu restaurante: ").upper()
+    for restaurante in lista_restaurante:
+        if verifying_name == restaurante["Nome"]:
+            nome_restaurante = verifying_name
+            texting("Anuncie seus pratos", f" Restaurante: {nome_restaurante}")
+            prato = input("Digite o nome do prato que deseja cadastrar: ").upper()
+            try:
+                valor = float(input("Digite o valor deste prato: "))
+                quantidade = float(input("Digite a quantidade disponível por cliente: "))
+            except:
+                input("Argumento inválido! Saindo...")
+                return
+            valor = float(valor)
+            quantidade = float(quantidade)
+        else:
+            input(f"O restaurante '{verifying_name}' não foi encontrado! Por favor, tente novamente.")
+            return
+
 
