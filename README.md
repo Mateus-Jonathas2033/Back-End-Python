@@ -15,6 +15,7 @@ Ou seja, no mesmo ambiente o cliente poderá contratar serviços, e a empresa po
 </h3>
 <ul>
 -Impedir entrada de nomes repetidos. [FEITO]<br>
+-Impedir entradas vazias.<br>
 -Funcionalidade para anunciar pratos com seus valores e suas unidades.<br>
 -Funcionalidade para adicionar endereço/filiais aos restaurantes.<br>
 -Funcionalidade para adicionar horários para alugar mesas dos restaurantes.<br>
