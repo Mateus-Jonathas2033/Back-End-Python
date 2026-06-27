@@ -25,15 +25,26 @@ def texting(title, subtitle):
 
 
 
+#block's_repeated_entrys
+def norepeated(lista, biblioteca, variavel):
+
+    for i in lista:
+        entidade = i[biblioteca]
+        if entidade == variavel:
+            chave = True
+            input(f"\nO '{variavel}' já existe. Por favor verifique a lista de restaurantes.")
+            return True
+
+        return False
+
+
+
 #register:
 def cadastrar_restaurante():
     texting("Cadastro de Restaurantes", "")
     nome_do_restaurante = input("\nDigite o nome do restaurante: ").upper()
-    for restaurante in lista_restaurante:
-        nome_restaurante = restaurante["Nome"]
-        if nome_restaurante == nome_do_restaurante:
-            input(f"\nO nome '{nome_do_restaurante}' já foi cadastrado. Por favor verifique a lista de restaurantes.")
-            return
+    if norepeated(lista_restaurante, "Nome", nome_do_restaurante) == True:
+        return
     categoria_do_restaurante = input("Digite a categoria do restaurante: ").upper()
     descricao_do_restaurante =  input("Digite uma descrição para o seu restaurante: ").upper()
     cadastro_restaurante = {"Nome":nome_do_restaurante, "Categoria":categoria_do_restaurante, "Descricao":descricao_do_restaurante, "Status":"AGUARDANDO APROVAÇÃO", "Ativo":False}
